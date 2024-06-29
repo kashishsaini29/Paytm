@@ -8,10 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/user",User);
-// app.get('/',(req,res)=>{
 
-
-// })
 
 
 app.listen(2000,function(res:any){

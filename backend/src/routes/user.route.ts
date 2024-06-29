@@ -3,6 +3,6 @@ import { createUserService } from "../services/user.service";
 
 const User = express.Router();
 console.log("-------->>>>>>>")
-User.post("/create",createUserService);
+User.post("/signup",createUserService);
 
 export default User;

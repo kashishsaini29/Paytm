@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import  {createUser} from '../repository/users.repository';
 import { validationSchema } from "../validation/user.validator";
+import User from "../repository/schemas/user.schema";
 
 
 export async function createUserService(req: Request, res: Response){
@@ -14,6 +15,12 @@ export async function createUserService(req: Request, res: Response){
        error:validateResponse.error.message.details[0].message
       })}
     console.log("data",data);
+    const existingUser = await User.findOne({username:data.username});
+    if(existingUser){
+      return res.status(400).send({
+        message:"User already exists"
+      })
+    }
   const result:any = await createUser(data);
   if(result.status ==="success"){
     return res.status(200).send({
