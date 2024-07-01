@@ -105,3 +105,26 @@ export async function updateUser(data:any,userId:any){
         return error
     }
 }
+
+export async function getUsers(name:any){
+    try{
+        const pipeline:any[]=[
+            {
+                $match:{
+                    $or:[
+                        {name:{$regex:name, $options:"i"}},
+                        {lastname:{$regex:name, $options:"i"}}
+                    ]
+                }
+            }
+        ];
+     const users :any = await User.aggregate(pipeline);
+     return {
+        status:"success",
+        data:users
+     }
+    }catch(error){
+        console.log("error in serch user",error);
+        return error
+    }
+}

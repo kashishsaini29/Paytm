@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import  {SignInRepo, createUser, updateUser} from '../repository/users.repository';
+import  {SignInRepo, createUser, getUsers, updateUser} from '../repository/users.repository';
 import { validationSchema } from "../validation/user.validator";
 import User from "../repository/schemas/user.schema";
 
@@ -97,6 +97,31 @@ export async function updateUserService(req:Request, res:Response){
   }catch(error){
     return res.status(500).json({
       message:"error updating user",
+      error:error
+    })
+  }
+}
+
+export async function getUsersService(req:Request,res:Response){
+  try{
+    const name:any = req.query.name;
+    const result:any = await getUsers(name);
+
+    if(result.status ==="success"){
+        return res.status(200).send({
+          status:"success",
+          data:result.data
+        })
+    }else{
+      return res.status(403).send({
+        status:result.status,
+        data:result.data
+      })
+    }
+
+  }catch(error){
+    return res.status(500).send({
+      message:"Error in getting users",
       error:error
     })
   }
