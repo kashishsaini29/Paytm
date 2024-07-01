@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import  {SignInRepo, createUser} from '../repository/users.repository';
+import  {SignInRepo, createUser, updateUser} from '../repository/users.repository';
 import { validationSchema } from "../validation/user.validator";
 import User from "../repository/schemas/user.schema";
 
@@ -48,7 +48,7 @@ export async function SignInService(req:Request, res:Response){
        message: validateResponse.message,
        error:validateResponse.error.message.details[0].message
       })}
-      
+
     const result:any = await SignInRepo(req);
     if(result.status ==="success"){
       return res.status(200).send({
@@ -67,6 +67,37 @@ export async function SignInService(req:Request, res:Response){
       message:"Error Signing in user",
       error:error
     
+    })
+  }
+}
+
+export async function updateUserService(req:Request, res:Response){
+  try{
+      const userId =req.userId;
+      const data = req.body;
+      const validateResponse:any= await validationSchema(data);
+      if(validateResponse.message.status ==="error"){
+        return res.status(401).json( {
+         message: validateResponse.message,
+         error:validateResponse.error.message.details[0].message
+        })}
+      
+      const response :any= await updateUser(data, userId);
+     if(response.status ==="success"){
+      return res.status(200).json({
+         status:"success",
+         data:response.data
+      })
+     }else{
+      return res.status(403).json({
+        status:response.status,
+        data:response.data
+      })
+     }
+  }catch(error){
+    return res.status(500).json({
+      message:"error updating user",
+      error:error
     })
   }
 }

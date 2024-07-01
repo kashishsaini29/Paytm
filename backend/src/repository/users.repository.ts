@@ -81,9 +81,25 @@ export async function SignInRepo(req:any){
     }
 }
 
-export async function updateUser(data:any){
+export async function updateUser(data:any,userId:any){
     try{
-   
+   const updateUser = await User.findOneAndUpdate(
+    {_id:userId},
+    data,
+    {new :true}
+    );
+    if(!updateUser){
+      console.log("user not found");
+      return {
+        status:"error",
+        data:updateUser
+      }
+    }else{
+        return {
+            status:"success",
+            data:updateUser
+        }
+    }
     }catch(error){
         console.log("error in update user profile",error);
         return error
