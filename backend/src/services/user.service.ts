@@ -19,7 +19,8 @@ export async function createUserService(req: Request, res: Response){
         message:"User already exists"
       })
     }
-  const result:any = await createUser(data);
+    const balance = Math.floor(1 + Math.random() * 10000);
+  const result:any = await createUser(data,balance);
   if(result.status ==="success"){
     return res.status(200).send({
         status:"success",

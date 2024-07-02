@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../config";
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
+import Account,{account} from "./schemas/account.schema";
 
 const hashPassword = async (password:any) => {
   try {
@@ -28,7 +29,7 @@ const hashPassword = async (password:any) => {
 export default hashPassword;
 
 
-export async function createUser(data:users){
+export async function createUser(data:users,balance:number){
     try{
         const hashedPass = await hashPassword(data.password);
         console.log("hashed Pass", hashedPass);
@@ -39,6 +40,11 @@ export async function createUser(data:users){
         password:hashedPass,
     }));
     const userId = user._id;
+    const account= await Account.create({
+        userId:new mongoose.Types.ObjectId(userId),
+        balance:balance
+    });
+
     const token = jwt.sign({
         userId
     },JWT_SECRET_KEY);
