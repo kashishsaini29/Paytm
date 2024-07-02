@@ -15,6 +15,6 @@ app.use("/paytm/V1",MainRouter);
 
 
 
-app.listen(2001,function(res:any){
-    console.log("listening port: 2001 ");
+app.listen(2000,function(res:any){
+    console.log("listening port: 2000 ");
 })
