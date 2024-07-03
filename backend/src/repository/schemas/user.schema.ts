@@ -2,12 +2,14 @@ import mongoose, { Schema,Document } from "mongoose";
 
 export interface users extends Document{
     name:string;
+    lastname:string;
     username:string;
-    role:string;
+    password:string;
+    // role:string;
     updatedAt?:string;
     createdAt?:string;
     deletedAt?:string;
-    permissions?:string[];
+    // permissions?:string[];
 }
 
 const UserSchema :Schema= new mongoose.Schema({
@@ -17,8 +19,19 @@ const UserSchema :Schema= new mongoose.Schema({
         lowercase:true,
         required:true
     },
+    lastname:{
+        type:String,
+        trim:true,
+        lowercase:true,
+        required:true
+    },
     username:{
         type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
     },
     role:{
         type:String,

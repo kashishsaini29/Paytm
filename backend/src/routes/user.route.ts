@@ -1,8 +1,12 @@
 const express =require('express');
-import { createUserService } from "../services/user.service";
+import { authenticateJWT } from "../middlewares/auth.middleware";
+import { SignInService, createUserService, getUsersService, updateUserService } from "../services/user.service";
 
 const User = express.Router();
-console.log("-------->>>>>>>")
 User.post("/signup",createUserService);
+User.post("/signin",authenticateJWT,SignInService);
+User.put("/update",authenticateJWT,updateUserService);
+User.get("/getusers",authenticateJWT,getUsersService);
+
 
 export default User;
