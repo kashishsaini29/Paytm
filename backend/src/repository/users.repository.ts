@@ -114,17 +114,26 @@ export async function updateUser(data:any,userId:any){
 
 export async function getUsers(name:any){
     try{
-        const pipeline:any[]=[
-            {
-                $match:{
-                    $or:[
-                        {name:{$regex:name, $options:"i"}},
-                        {lastname:{$regex:name, $options:"i"}}
+        console.log("name in repo",name);
+        const pipeline:any[]=[];
+        if (name && name.trim() !== "") {
+            pipeline.push({
+                $match: {
+                    $or: [
+                        { name: { $regex: name, $options: "i" } },
+                        { lastname: { $regex: name, $options: "i" } }
                     ]
                 }
-            }
-        ];
+            });
+        } else {
+            pipeline.push({
+                $match: {}
+            });
+        }
+        console.log("pipeline",pipeline);
+        
      const users :any = await User.aggregate(pipeline);
+    console.log("users-->",users);
      return {
         status:"success",
         data:users

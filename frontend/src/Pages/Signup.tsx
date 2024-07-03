@@ -28,7 +28,6 @@ const Signup = () => {
           username,
           password
         })
-        console.log("response-->>>>>>>",response.data.data);
         localStorage.setItem("token", response.data.data);
       }}
       lable={"Submit"}

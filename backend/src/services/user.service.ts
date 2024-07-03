@@ -105,7 +105,8 @@ export async function updateUserService(req:Request, res:Response){
 
 export async function getUsersService(req:Request,res:Response){
   try{
-    const name:any = req.query.name;
+    const name:any = req?.query?.name || "";
+    console.log("name",name);
     const result:any = await getUsers(name);
 
     if(result.status ==="success"){
