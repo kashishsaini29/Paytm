@@ -1,7 +1,12 @@
 import React from 'react'
 
-export const Balance = () => {
+export const Balance = ({balance}:any) => {
   return (
-    <div>Balance</div>
+    <div className='flex gap-2 p-6'>
+      <div className='font-bold flex'> Your Balance:</div>
+      <div className='flex'>
+        { `Rs. ${balance}`}
+      </div>
+    </div>
   )
 }

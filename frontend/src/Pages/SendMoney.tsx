@@ -1,8 +1,15 @@
 import React from 'react'
+import { Sendmoney } from '../Components/Sendmoney'
 
 const SendMoney = () => {
+  const user={
+    name:"Vipul",
+    userId:"adfad"
+  }
   return (
-    <div>SendMoney</div>
+    <div>
+      <Sendmoney user={user}/>
+    </div>
   )
 }
 

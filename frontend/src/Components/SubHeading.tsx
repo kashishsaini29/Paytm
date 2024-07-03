@@ -1,8 +1,10 @@
 import React from 'react'
 
-const SubHeading = () => {
+const SubHeading = ({lable}:any) => {
   return (
-    <div>SubHeading</div>
+    <div className='flex text-gray-600 p-3 font-semibold mb-2'>
+      {lable}
+    </div>
   )
 }
 
